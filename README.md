@@ -6,9 +6,9 @@ Aplicacion crud presentada como trabajo final de la materia PP1
 ``` 
 - git clone https://github.com/Marcos-Monjes/Trabajo-final-pp1
 
-- cd TrabajoFinalPP1
+- cd Trabajo-final-pp1
 
--docker-compose up -d
+- docker-compose up -d
 ```
 
 ## Contacto
