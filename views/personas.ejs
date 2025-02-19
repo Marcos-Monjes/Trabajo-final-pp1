@@ -1,7 +1,76 @@
+<!DOCTYPE html>
 <html>
 <%- include('./head.ejs') %>
 
     <body>
-        <%= mensaje %>
+        <h1><%= mensaje %></h1>
+
+        <!-- Formulario para crear/editar persona -->
+        <div id="formularioPersona">
+            <h2 id="tituloFormulario">Crear Nueva Persona</h2>
+            <form id="personaForm" action="/personas/crear" method="POST">
+                <input type="hidden" name="id" id="personaId">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="submit">Guardar</button>
+                <button type="button" onclick="limpiarFormulario()">Cancelar</button>
+            </form>
+        </div>
+
+        <!-- Tabla de personas -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (personas && personas.length > 0) { %>
+                    <% personas.forEach(persona => { %>
+                        <tr>
+                            <td><%= persona.id %></td>
+                            <td><%= persona.nombre %></td>
+                            <td><%= persona.email %></td>
+                            <td>
+                                <button onclick="editarPersona(<%= JSON.stringify(persona) %>)">Editar</button>
+                                <a href="/personas/eliminar/<%= persona.id %>" onclick="return confirm('¿Está seguro de eliminar esta persona?')">
+                                    <button type="button">Eliminar</button>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">No hay personas registradas</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <script>
+            function editarPersona(persona) {
+                document.getElementById('tituloFormulario').textContent = 'Editar Persona';
+                document.getElementById('personaId').value = persona.id;
+                document.getElementById('nombre').value = persona.nombre;
+                document.getElementById('email').value = persona.email;
+                document.getElementById('personaForm').action = '/personas/actualizar';
+            }
+
+            function limpiarFormulario() {
+                document.getElementById('tituloFormulario').textContent = 'Crear Nueva Persona';
+                document.getElementById('personaForm').reset();
+                document.getElementById('personaForm').action = '/personas/crear';
+                document.getElementById('personaId').value = '';
+            }
+        </script>
     </body>
 </html>

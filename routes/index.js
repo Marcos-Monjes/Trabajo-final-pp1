@@ -8,5 +8,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/personas', ctl.ListPersonas);
+router.post('/personas/crear', ctl.CreatePersona);
+router.post('/personas/actualizar', ctl.UpdatePersona);
+router.get('/personas/eliminar/:id', ctl.DeletePersona);
 
 module.exports = router;
