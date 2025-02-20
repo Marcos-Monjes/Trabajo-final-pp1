@@ -5,13 +5,18 @@ services:
     image: mysql:8.0
     container_name: mysql-container
     environment:
-      MYSQL_ROOT_PASSWORD: 1234      
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: cruddb2
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
       - my_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
   #Servicio de la aplicación Node.js
   node_app:
     image: marcosmonjes9919/trabajofinalpp1:1.0
@@ -19,7 +24,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - my_network
 volumes:

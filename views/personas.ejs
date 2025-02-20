@@ -5,7 +5,7 @@
     <body>
         <h1><%= mensaje %></h1>
 
-        <!-- Formulario para crear/editar persona -->
+        <!-- formulario para crear/editar persona -->
         <div id="formularioPersona">
             <h2 id="tituloFormulario">Crear Nueva Persona</h2>
             <form id="personaForm" action="/personas/crear" method="POST">
@@ -18,12 +18,23 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
+                <div class="form-group">
+                    <label for="oficina_id">Oficina:</label>
+                    <select id="oficina_id" name="oficina_id">
+                        <option value="">Seleccione una oficina</option>
+                        <% if (oficinas && oficinas.length > 0) { %>
+                            <% oficinas.forEach(oficina => { %>
+                                <option value="<%= oficina.id %>"><%= oficina.denominacion %></option>
+                            <% }); %>
+                        <% } %>
+                    </select>
+                </div>
                 <button type="submit">Guardar</button>
                 <button type="button" onclick="limpiarFormulario()">Cancelar</button>
             </form>
         </div>
 
-        <!-- Tabla de personas -->
+        <!-- tabla de personas -->
         <table border="1">
             <thead>
                 <tr>

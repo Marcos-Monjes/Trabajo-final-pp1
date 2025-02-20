@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<%- include('./head.ejs') %>
+<body>
+    <div class="container">
+        <h1><%= mensaje %></h1>
+
+        <!-- formulario para crear/editar oficina -->
+        <div id="formularioOficina">
+            <h2 id="tituloFormulario">Crear Nueva Oficina</h2>
+            <form id="oficinaForm" action="/oficinas/crear" method="POST">
+                <input type="hidden" name="id" id="oficinaId">
+                <div class="form-group">
+                    <label for="denominacion">Denominación:</label>
+                    <input type="text" id="denominacion" name="denominacion" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Guardar</button>
+                    <button type="button" onclick="limpiarFormulario()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- tabla de oficinas -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Denominación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (oficinas && oficinas.length > 0) { %>
+                    <% oficinas.forEach(oficina => { %>
+                        <tr>
+                            <td><%= oficina.id %></td>
+                            <td><%= oficina.denominacion %></td>
+                            <td>
+                                <button onclick="editarOficina(<%= JSON.stringify(oficina) %>)">Editar</button>
+                                <a href="/oficinas/eliminar/<%= oficina.id %>" 
+                                   onclick="return confirm('¿Está seguro de eliminar esta oficina?')">
+                                    <button type="button">Eliminar</button>
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="3">No hay oficinas registradas</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <div class="navigation">
+            <a href="/personas">Ir a Personas</a>
+        </div>
+    </div>
+
+    <script>
+        function editarOficina(oficina) {
+            document.getElementById('tituloFormulario').textContent = 'Editar Oficina';
+            document.getElementById('oficinaId').value = oficina.id;
+            document.getElementById('denominacion').value = oficina.denominacion;
+            document.getElementById('oficinaForm').action = '/oficinas/actualizar';
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('tituloFormulario').textContent = 'Crear Nueva Oficina';
+            document.getElementById('oficinaForm').reset();
+            document.getElementById('oficinaForm').action = '/oficinas/crear';
+            document.getElementById('oficinaId').value = '';
+        }
+    </script>
+</body>
+</html>
