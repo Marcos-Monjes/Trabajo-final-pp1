@@ -5,32 +5,35 @@
     <%- include('./navbar.ejs') %>
     
     <div class="container mt-4">
-        <h1 class="mb-4">Lista de Oficinas</h1>
+        <h1 class="mb-4">Resultados de la Búsqueda</h1>
         
         <div class="mb-3">
-            <a href="/oficinas/agregar" class="btn btn-primary">Agregar Nueva Oficina</a>
+            <a href="/personas/buscar" class="btn btn-secondary">Nueva Búsqueda</a>
+            <a href="/personas" class="btn btn-primary">Volver a la Lista</a>
         </div>
 
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="table-dark">
                     <tr>
-                        <th>Denominación</th>
-                        <th>Personas Asignadas</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Oficina</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% if (oficinas && oficinas.length > 0) { %>
-                        <% oficinas.forEach(oficina => { %>
+                    <% if (resultados && resultados.length > 0) { %>
+                        <% resultados.forEach(persona => { %>
                             <tr>
-                                <td><%= oficina.denominacion %></td>
-                                <td><%= oficina.cantidad_personas %></td>
+                                <td><%= persona.nombre %></td>
+                                <td><%= persona.email %></td>
+                                <td><%= persona.oficina_nombre || 'Sin asignar' %></td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="/oficinas/editar/<%= oficina.id %>" 
+                                        <a href="/personas/editar/<%= persona.id %>" 
                                            class="btn btn-warning btn-sm">Editar</a>
-                                        <a href="/oficinas/borrar/<%= oficina.id %>" 
+                                        <a href="/personas/borrar/<%= persona.id %>" 
                                            class="btn btn-danger btn-sm">Eliminar</a>
                                     </div>
                                 </td>
@@ -38,14 +41,12 @@
                         <% }); %>
                     <% } else { %>
                         <tr>
-                            <td colspan="3" class="text-center">No hay oficinas registradas</td>
+                            <td colspan="4" class="text-center">No se encontraron resultados</td>
                         </tr>
                     <% } %>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

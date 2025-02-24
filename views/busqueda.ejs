@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<%- include('./head.ejs') %>
+<body>
+    <%- include('./navbar.ejs') %>
+    
+    <div class="container mt-4">
+        <h1 class="mb-4">Búsqueda de Personas</h1>
+        
+        <div class="card">
+            <div class="card-body">
+                <form action="/personas/resultados" method="GET">
+                    <div class="mb-3">
+                        <label for="termino" class="form-label">Buscar por nombre o email:</label>
+                        <input type="text" class="form-control" id="termino" name="termino" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="oficina_id" class="form-label">Filtrar por oficina (opcional):</label>
+                        <select class="form-select" id="oficina_id" name="oficina_id">
+                            <option value="">Todas las oficinas</option>
+                            <% oficinas.forEach(oficina => { %>
+                                <option value="<%= oficina.id %>"><%= oficina.denominacion %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                    <a href="/personas" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

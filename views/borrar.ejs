@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<%- include('./head.ejs') %>
+<body>
+    <%- include('./navbar.ejs') %>
+    
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="mb-4">Confirmar Eliminación</h1>
+                
+                <% if (tipo === 'persona') { %>
+                    <p class="lead">¿Está seguro que desea eliminar a la persona "<%= persona.nombre %>"?</p>
+                    <div class="mt-4">
+                        <a href="/personas/eliminar/<%= persona.id %>?confirmar=true" 
+                           class="btn btn-danger">Eliminar</a>
+                        <a href="/personas" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                <% } else { %>
+                    <p class="lead">¿Está seguro que desea eliminar la oficina "<%= oficina.denominacion %>"?</p>
+                    <% if (tienePersonas) { %>
+                        <div class="alert alert-warning">
+                            Esta oficina tiene personas asignadas. Al eliminarla, estas personas quedarán sin oficina asignada.
+                        </div>
+                    <% } %>
+                    <div class="mt-4">
+                        <a href="/oficinas/eliminar/<%= oficina.id %>?confirmar=true" 
+                           class="btn btn-danger">Eliminar</a>
+                        <a href="/oficinas" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

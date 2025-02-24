@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<%- include('./head.ejs') %>
+<body>
+    <%- include('./navbar.ejs') %>
+    
+    <div class="container mt-4">
+        <h1 class="mb-4"><%= tipo === 'persona' ? 'Editar Persona' : 'Editar Oficina' %></h1>
+        
+        <div class="card">
+            <div class="card-body">
+                <% if (tipo === 'persona') { %>
+                    <form action="/personas/actualizar" method="POST">
+                        <input type="hidden" name="id" value="<%= persona.id %>">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= persona.nombre %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" value="<%= persona.email %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="oficina_id" class="form-label">Oficina:</label>
+                            <select class="form-select" id="oficina_id" name="oficina_id">
+                                <option value="">Seleccione una oficina</option>
+                                <% oficinas.forEach(oficina => { %>
+                                    <option value="<%= oficina.id %>" 
+                                            <%= persona.oficina_id === oficina.id ? 'selected' : '' %>>
+                                        <%= oficina.denominacion %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    <% } else { %>
+                        <form action="/oficinas/actualizar" method="POST">
+                            <input type="hidden" name="id" value="<%= oficina.id %>">
+                            <div class="mb-3">
+                                <label for="denominacion" class="form-label">Denominación:</label>
+                                <input type="text" class="form-control" id="denominacion" name="denominacion" 
+                                       value="<%= oficina.denominacion %>" required>
+                            </div>
+                    <% } %>
+                    
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a href="<%= tipo === 'persona' ? '/personas' : '/oficinas' %>" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

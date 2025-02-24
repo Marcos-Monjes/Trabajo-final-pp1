@@ -1,6 +1,7 @@
 body {
   padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /* background-color: #9ea0a3;  */
 }
 
 a {
@@ -42,4 +43,40 @@ button {
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
+}
+
+/*navbar*/
+.navbar {
+  background-color: #4c0a83  !important;  /* Azul oscuro */
+}
+
+.navbar-brand, .nav-link {
+  color: #ffffff !important;  /* Texto blanco */
+}
+
+/*tabla*/
+.table .table-dark,
+.table thead.table-dark,
+.table,th {
+    background-color: #4c0a83 !important;
+    color: white !important;
+    border-color: #4c0a83 !important;
+}
+
+.btn-primary{
+  background-color:rgb(29, 245, 29);
+  border-color: rgb(29, 245, 29);
+}
+.btn-primary:hover{
+  background-color:green;
+  border-color: green;
+}
+
+.btn-secondary {
+  background-color: #284add;
+  border-color: #284add;
+}
+.btn-secondary:hover{
+  background-color: blue;
+  border-color: blue;
 }
