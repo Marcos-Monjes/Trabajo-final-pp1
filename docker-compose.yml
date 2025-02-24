@@ -11,6 +11,27 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+    networks:
+      - my_network
+
+  node_app:
+    image: marcosmonjes9919/trabajofinalpp1:3.0
+    container_name: node-app-container
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: always
+    networks:
+      - my_network
 
 volumes:
   mysql_data:
+
+networks:
+  my_network:
