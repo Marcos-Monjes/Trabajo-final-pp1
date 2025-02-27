@@ -4,8 +4,8 @@ const ListPersonas = (req, res) => {
     const sql = "SELECT p.*, o.denominacion as oficina_nombre FROM persona p LEFT JOIN oficina o ON p.oficina_id = o.id";
     db.query(sql, (err, result) => {
         if(err) {
-            console.log("Error al obtener personas:", err);
-            return res.status(500).send(err);
+            console.error("Error detallado al obtener personas:", err);
+            return res.status(500).json({ error: err.message });
         }
         res.render('personas', { 
             title: 'Personas',
@@ -247,7 +247,7 @@ const DeleteOficina = (req, res) => {
         return res.redirect(`/oficinas/borrar/${id}`);
     }
     
-    // Primero actualizamos las personas para quitar la referencia
+    //actualiza las personas para quitar la referencia
     const sqlUpdatePersonas = "UPDATE persona SET oficina_id = NULL WHERE oficina_id = ?";
     db.query(sqlUpdatePersonas, [id], (err) => {
         if(err) {
@@ -255,7 +255,7 @@ const DeleteOficina = (req, res) => {
             return res.status(500).send(err);
         }
         
-        // Luego eliminamos la oficina
+        // dps elimina la oficina
         const sqlDeleteOficina = "DELETE FROM oficina WHERE id = ?";
         db.query(sqlDeleteOficina, [id], (err, result) => {
             if(err) {
